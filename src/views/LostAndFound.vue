@@ -84,15 +84,16 @@ export default {
   },
   async created() {
     this.id = this.$route.params.id;
+    this.token = this.$route.params.token;
     if (this.id) {
       // 如果指定了id
       try{
-        let oldRecord = (await this.$axios.get("/api/lostAndFound?id=" + this.id))
+        let oldRecord = (await this.$axios.get("/api/lostAndFound?id=" + this.id,{headers:{token:this.token}}))
         .data;
         this.type = oldRecord.type;
-      this.title = oldRecord.title;
-      this.describe = oldRecord.describe;
-      this.images = [];
+        this.title = oldRecord.title;
+        this.describe = oldRecord.describe;
+        this.images = [];
       } catch(e) {
         window.location = "https://myseu.cn";
       } 
@@ -105,7 +106,6 @@ export default {
       this.images =
         JSON.parse(window.localStorage.getItem("lost-and-found#images")) || [];
     }
-    this.token = this.$route.params.token;
     try {
       // 获取一卡通号顺便进而检测token有效性
       let userInfo = (await this.$axios.get("/api/user", {
