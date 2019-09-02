@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/:token/:id?',
+      path: '/lost-and-found/:token/:id?',
       name: 'lost-and-found',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
